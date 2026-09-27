@@ -1,0 +1,4 @@
+# Payload corpus: every file must round-trip byte-for-byte across devices.
+# Disable ALL end-of-line conversion so polyglots, magic-byte images, web
+# shells, and bombs are never mangled by CRLF normalization on checkout.
+* -text
