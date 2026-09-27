@@ -1,0 +1,8 @@
+# Oversized size-test dummies — regenerate with size-test/regen.py (GitHub blocks >100MB)
+size-test/100-mb-example-jpg.jpg
+size-test/50mb.jpg
+
+# helper artifacts
+_gen_uploads.py
+__pycache__/
+*.pyc

