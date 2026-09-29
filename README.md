@@ -7,6 +7,8 @@ Organized one folder per bug class for fast access. Payloads use placeholders:
 > Scope discipline (CLAUDE.md §2): only fire these at hosts listed in `state/scope.md`.
 > Web shells / bombs are live payloads — treat accordingly.
 
+**➡ [`INDEX.md`](INDEX.md) — walkable engagement checklist: every file → the exact test it proves + the pass signal.** Use it during a hunt; use this README for the map/install.
+
 ## Folders
 
 | Folder | Bug class | Key files |
