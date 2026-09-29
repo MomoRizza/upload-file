@@ -1,0 +1,5 @@
+MIME-Version: 1.0
+Content-Type: text/html
+Subject: eml-xss
+
+<!DOCTYPE html><html><body><script>alert(document.domain)</script></body></html>

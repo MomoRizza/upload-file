@@ -1,0 +1,2 @@
+<!DOCTYPE html><html><body><script>alert(document.domain)</script>
+<img src=x onerror=alert(document.domain)></body></html>

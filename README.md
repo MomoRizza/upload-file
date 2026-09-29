@@ -11,24 +11,24 @@ Organized one folder per bug class for fast access. Payloads use placeholders:
 
 | Folder | Bug class | Key files |
 |---|---|---|
-| `web-shell/` | RCE via executable upload | `shell.php`, `.aspx`, `.asp`, `.jsp`, `.jspx`, `.cshtml`, php ext-variants (`phtml/php5/php7/pht/phar/phps/inc`), short-tag |
-| `xss/` | Stored XSS via served HTML | `xss.html`, `.xhtml`, `.xml`, `.txt`, `.mhtml` (MIME-related), `.js` (served/`<script src>`), `.json` (MIME-sniff) |
-| `svg/` | SVG XSS / XXE / SSRF / DoS | `svg-onload`, `svg-script`, `svg-foreignobject`, `svg-xxe`, `svg-ssrf`, `svg-billion-laughs`, `svg-animate-xss` (SMIL `<set>/<animate>`), `svg-use-xss` (`<use>`+data/href), `svgz-onload.svgz` (gzipped — bypasses `.svg`-only checks) |
-| `pdf/` | PDF-JS XSS / SSRF + HTML→PDF | `pdf-openaction-xss.pdf` (Acrobat `/OpenAction /JS`), `pdf-uri-ssrf.pdf` (auto `/URI` + link OOB), `html-to-pdf-ssrf.html` / `html-to-pdf-lfi.html` (server-side HTML→PDF converters: iframe/img → metadata + `file://`) |
-| `office/` | OOXML XML-external-entity | `docx-xxe-fileread.docx` (`file:///etc/passwd`), `xlsx-xxe-oob.xlsx` (OOB param-entity → `ATTACKER-HOST/evil.dtd`) — valid zips; XXE injected in `word/document.xml` / `xl/workbook.xml` |
-| `image-metadata/` | XSS via reflected image metadata | `png-text-xss.png` (tEXt `Comment` chunk), `exif-comment-xss.jpg` (JPEG COM segment) — fire when the app echoes EXIF/PNG metadata unencoded |
-| `xxe/` | XML external entity | file-read (nix/win), SSRF, OOB (+`evil.dtd`), billion-laughs |
-| `ssrf/` | SSRF via media parsers | `ssrf.svg`, `ssrf.m3u8`, `ffmpeg-ssrf.avi` (FFmpeg HLS) |
-| `content-type-bypass/` | Magic-byte valid image + payload | `png/gif/jpeg-php.*` (valid image header, PHP appended), `gif-xss.gif` |
-| `polyglot/` | Dual-parse files | `pdf-xss.pdf`, `gif-html.html`, `js-gif-polyglot.gif` (valid GIF magic + valid JS → CSP `script-src 'self'` bypass via `<script src>`) |
-| `filename-payloads/` | Malicious filenames (request-time) | `filenames.txt` — XSS / SQLi / SSTI / cmd-injection / traversal / unicode names to set in the multipart `filename=` field |
-| `extension-bypass/` | Filter evasion by name | `shell.php.jpg`, `shell.jpg.php`, `shell.pHp`, `shell.php%00.jpg`, … |
-| `config-override/` | Handler hijack | `.htaccess` (Apache→exec images as PHP), `web.config` (IIS ASP) |
-| `csv-injection/` | CSV/formula injection | `formula.csv` |
+| `web-shell/` | RCE via executable upload | **PHP** `.php/.php3/.php4/.php5/.php7/.phtml/.phtm/.pht/.phar/.phps/.inc` + short-tag · **ASP/.NET** `.asp/.aspx/.ashx/.cshtml/.asa/.cer/.cdx` · **JSP** `.jsp/.jspx/.jspf` · **SSI** `.shtml/.shtm/.stm` · **Perl** `.pl/.cgi` · **Python** `.py` · **Ruby** `.rb/.erb/.rhtml` · **ColdFusion** `.cfm/.cfml` |
+| `xss/` | Stored XSS via served content | `.html/.htm/.xhtml/.xht/.dhtml/.wml`, `.xml`, `.txt`, `.mhtml`, `.eml`, `.js` (`<script src>`), `.json` (MIME-sniff), `.xsl/.xslt` (XSLT+`document()`), `.vtt` (WebVTT), `.hta`, `.md/.markdown`, `.rss/.atom/.rdf` (feeds/CDATA) |
+| `svg/` | SVG XSS / XXE / SSRF / DoS | `svg-onload/-script/-foreignobject/-xxe/-ssrf/-billion-laughs`, `svg-animate-xss` (SMIL), `svg-use-xss` (`<use>`+data/href), `svgz-onload.svgz` (gzipped — bypasses `.svg`-only checks) |
+| `pdf/` | PDF-JS XSS / SSRF + HTML→PDF | `pdf-openaction-xss` (Acrobat `/OpenAction /JS`), `pdf-uri-ssrf`, `pdf-submitform-ssrf`, `pdf-gotor-ssrf`, `pdf-importdata-ssrf`, `pdf-launch-action` (all auto-action OOB); `html-to-pdf-ssrf.html`/`html-to-pdf-lfi.html` (server-side HTML→PDF: metadata + `file://`) |
+| `office/` | OOXML XXE + template injection | `docx-xxe-fileread` / `docx-xxe-oob` / `xlsx-xxe-oob` / `xlsx-xxe-fileread` / `pptx-xxe` (XXE in the doc XML parts); `docx-remote-template.docx` (external `attachedTemplate` rel → SSRF/remote-template load) — all valid zips |
+| `image-metadata/` | XSS via reflected media metadata | `exif-comment-xss.jpg` (JPEG COM), `jpeg-xmp-xss.jpg` (XMP packet), `png-text-xss.png` (tEXt), `png-itxt-xss.png` (iTXt), `gif-comment-xss.gif` (comment ext) — fire when the app echoes metadata unencoded |
+| `xxe/` | XML external entity | file-read (nix/win), SSRF, OOB (`evil.dtd`/`xxe-error.dtd`), billion-laughs, `xxe-xinclude`, `xxe-php-filter`, `xxe-parameter-entity`, `xxe-utf16`, `xxe-svg-in-xml` |
+| `ssrf/` | SSRF via parsers | `ssrf.svg`, `ssrf.m3u8`, `ffmpeg-ssrf.avi`, `ffmpeg-concat-ssrf.txt` (concat demuxer `file://`+http), `ssrf-jsonref[-file].json` (`$ref`), `ssrf.gpx`, `ssrf-import.css` (`@import`/`url()`) |
+| `content-type-bypass/` | Valid magic bytes + payload | `png/gif/jpeg/bmp/webp/tiff/ico/pdf-php.*` (valid header + PHP appended), `gif-xss.gif`, `bmp-xss.bmp` |
+| `polyglot/` | Dual-parse files | `pdf-xss.pdf`, `gif-html.html`, `js-gif-polyglot.gif` / `bmp-js-polyglot.bmp` / `html-js-polyglot.js` (image/HTML magic + valid JS → CSP `script-src 'self'` bypass), `phar-jpeg.jpg` (PHAR/JPEG object-injection stub) |
+| `filename-payloads/` | Malicious filenames (request-time) | `filenames.txt` — XSS / SQLi / SSTI / cmd-injection / traversal / unicode names for the multipart `filename=` field (chars a filesystem can't store) |
+| `extension-bypass/` | Filter evasion by name | full matrix: case (`shell.PHP…`), double/reversed (`shell.php.jpg`, `shell.jpg.php`, `shell.png.php`), backup (`.bak/.old/~/.save/.swp`), url-encoded (`%00/%0a/%0d/%09/%23/%3f/%2500/%20`), alt-engine (`shell.asp;.png`, `shell.phtml.jpg`, `shell.jsp.jpg`, …) |
+| `config-override/` | Handler hijack | `.htaccess` (Apache→exec images as PHP), `web.config` (IIS), `.user.ini` (PHP-FPM `auto_prepend_file`), `htaccess-variants.txt` (AddType/AddHandler/SetHandler/php_value) |
+| `csv-injection/` | Formula/CSV injection | `formula.csv`, `formula.tsv`, `formula.slk` (SYLK `EXEC`), `dde.csv` (DDE), `google-sheets-import.csv` (IMPORTXML/DATA/IMAGE exfil) |
 | `eicar/` | AV pipeline test | `eicar.com.txt` (standard EICAR string, benign) |
 | `image-tragick/` | ImageMagick RCE/SSRF | `.mvg` / `.svg` (CVE-2016-3714 family) |
-| `dos/` | Resource exhaustion | `decompression-bomb.gz` (100MB inflate), `zip-bomb.zip`, `pixel-flood.png` (65535×65535) |
-| `path-traversal/` | Path traversal / zip-slip | `zip-slip.zip`, url-encoded traversal filenames |
+| `dos/` | Resource exhaustion | `decompression-bomb.gz`, `zip-bomb.zip`, `nested-zip-bomb.zip`, `pixel-flood.png` (65535²), `xml-quadratic-blowup.xml`, `json-bomb.json` (deep nesting) |
+| `path-traversal/` | Traversal / zip-slip / symlink | `zip-slip.zip`, `tar-slip.tar` (`../` + symlink), `symlink.zip` (symlink→`/etc/passwd`), url-encoded traversal filenames (single/double/overlong-UTF-8/backslash) |
 | `size-test/` | Upload size-limit test | 600KB / 50MB / 100MB JPEGs |
 
 ## Filename tricks NTFS can't store (send them at request time in the multipart `filename=` field)

